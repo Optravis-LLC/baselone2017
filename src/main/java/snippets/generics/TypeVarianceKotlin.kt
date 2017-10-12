@@ -1,7 +1,7 @@
 package snippets.generics
 
 /**
- * Produces Ts -> use variance annotation 'out'
+ * Produces Ts -> use variance annotation 'out'.
  */
 interface KotlinProducer<out T> {
 
@@ -9,7 +9,7 @@ interface KotlinProducer<out T> {
 }
 
 /**
- * Consumes Ts -> use variance annotation 'in'
+ * Consumes Ts -> use variance annotation 'in'.
  */
 interface KotlinConsumer<in T> {
 
@@ -17,7 +17,7 @@ interface KotlinConsumer<in T> {
 }
 
 /**
- * Invariant.
+ * Covariant because of declaration-site variance annotations.
  */
 fun <T> copy(producer: KotlinProducer<T>, consumer: KotlinConsumer<T>) {
   consumer.accept(producer.get())
