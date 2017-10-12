@@ -20,12 +20,12 @@ public class Main {
     for (final Restaurant restaurant : JsonUtil.read("restaurants.json", Restaurant[].class)) {
       final Menu regularMenu = restaurant.getRegularMenu();
       if (regularMenu != null) {
-        mapDishes(map, restaurant, regularMenu, false);
+        mapDishes(map, restaurant, regularMenu);
       }
 
-      final Menu veganMenu = restaurant.getVeganMenu();
-      if (veganMenu != null) {
-        mapDishes(map, restaurant, regularMenu, true);
+      final Menu gourmetMenu = restaurant.getGourmetMenu();
+      if (gourmetMenu != null) {
+        mapDishes(map, restaurant, gourmetMenu);
       }
     }
 
@@ -33,12 +33,11 @@ public class Main {
 
   private static void mapDishes(final Map<DishRestaurantWrapper, CaloriesVeganWrapper> map,
                                 final Restaurant restaurant,
-                                final Menu regularMenu,
-                                final boolean isVegan) {
+                                final Menu regularMenu) {
     final Dish[] dishes = regularMenu.getDishes();
     if (dishes != null) {
       for (final Dish dish : dishes) {
-        map.put(new DishRestaurantWrapper(dish.getName(), restaurant.getName()), new CaloriesVeganWrapper(dish.getCalories(), isVegan));
+        map.put(new DishRestaurantWrapper(dish.getName(), restaurant.getName()), new CaloriesVeganWrapper(dish.getCalories(), dish.getVegan()));
       }
     }
   }

@@ -5,7 +5,7 @@ public class Restaurant {
   private String name;
 
   private Menu regularMenu;
-  private Menu veganMenu;
+  private Menu gourmetMenu;
 
   public String getName() {
     return name;
@@ -23,11 +23,11 @@ public class Restaurant {
     this.regularMenu = regularMenu;
   }
 
-  public Menu getVeganMenu() {
-    return veganMenu;
+  public Menu getGourmetMenu() {
+    return gourmetMenu;
   }
 
-  public void setVeganMenu(final Menu veganMenu) {
-    this.veganMenu = veganMenu;
+  public void setGourmetMenu(final Menu gourmetMenu) {
+    this.gourmetMenu = gourmetMenu;
   }
 }
