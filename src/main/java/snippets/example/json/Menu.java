@@ -1,4 +1,4 @@
-package snippets.expressions.java.json;
+package snippets.example.json;
 
 public class Menu {
 
