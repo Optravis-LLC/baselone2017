@@ -79,10 +79,7 @@ public class Main {
 
       final DishRestaurantWrapper that = (DishRestaurantWrapper) o;
 
-      if (restaurant != null ? !restaurant.equals(that.restaurant) : that.restaurant != null) {
-        return false;
-      }
-      return dish != null ? dish.equals(that.dish) : that.dish == null;
+      return (restaurant != null ? restaurant.equals(that.restaurant) : that.restaurant == null) && (dish != null ? dish.equals(that.dish) : that.dish == null);
     }
 
     @Override
