@@ -14,8 +14,10 @@ fun main(args: Array<String>) {
       .flatMap { (restaurant, dishes) ->
         dishes.asSequence()
             .filter { it.calories != null && it.vegan != null }
-            .map { DishRestaurantWrapper(restaurant, it.name) to CaloriesVeganWrapper(it.calories!!, it.vegan!!) }
+            .map { DishRestaurantWrapper(restaurant!!, it.name!!) to CaloriesVeganWrapper(it.calories!!, it.vegan!!) }
       }.toMap()
+
+  print(map)
 
 }
 

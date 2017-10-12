@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Departure",
+    "regularMenu": {
+      "dishes": [
+        {
+          "name": "Spaghetti Bolognesa",
+          "calories": 450,
+          "vegan": false
+        },
+        {
+          "name": "Spaghetti Aglio e Olio",
+          "calories": 350,
+          "vegan": true
+        },
+        {
+          "name": "Burger"
+        }
+      ]
+    }
+  }
+]

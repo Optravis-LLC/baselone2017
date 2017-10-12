@@ -39,6 +39,8 @@ public class Main {
       }
     }
 
+    System.out.println(map);
+
   }
 
   private static void mapDishes(@NotNull final Map<DishRestaurantWrapper, CaloriesVeganWrapper> map,
@@ -47,7 +49,9 @@ public class Main {
     final Dish[] dishes = menu.getDishes();
     if (dishes != null) {
       for (final Dish dish : dishes) {
-        map.put(new DishRestaurantWrapper(dish.getName(), restaurant.getName()), new CaloriesVeganWrapper(dish.getCalories(), dish.getVegan()));
+        if (dish.getCalories() != null && dish.getVegan() != null) {
+          map.put(new DishRestaurantWrapper(dish.getName(), restaurant.getName()), new CaloriesVeganWrapper(dish.getCalories(), dish.getVegan()));
+        }
       }
     }
   }
