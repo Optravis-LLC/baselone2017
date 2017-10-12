@@ -59,6 +59,30 @@ public class Main {
     public String getDish() {
       return dish;
     }
+
+    @Override
+    public boolean equals(final Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (o == null || getClass() != o.getClass()) {
+        return false;
+      }
+
+      final DishRestaurantWrapper that = (DishRestaurantWrapper) o;
+
+      if (restaurant != null ? !restaurant.equals(that.restaurant) : that.restaurant != null) {
+        return false;
+      }
+      return dish != null ? dish.equals(that.dish) : that.dish == null;
+    }
+
+    @Override
+    public int hashCode() {
+      int result = restaurant != null ? restaurant.hashCode() : 0;
+      result = 31 * result + (dish != null ? dish.hashCode() : 0);
+      return result;
+    }
   }
 
   private static class CaloriesVeganWrapper {
