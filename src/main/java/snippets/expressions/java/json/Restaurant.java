@@ -3,7 +3,6 @@ package snippets.expressions.java.json;
 public class Restaurant {
 
   private String name;
-
   private Menu regularMenu;
   private Menu gourmetMenu;
 

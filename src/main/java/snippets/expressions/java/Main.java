@@ -24,33 +24,32 @@ public class Main {
   public static void main(String args[]) throws IOException {
 
     // map dish and restaurant to calories and vegan
-    final Map<DishRestaurantWrapper, CaloriesVeganWrapper> map = new HashMap<>();
+    final Map<DishRestaurantKey, CaloriesVegan> map = new HashMap<>();
 
     // read restaurants in
     for (final Restaurant restaurant : read(Paths.get("restaurants.json"), Restaurant[].class)) {
       final Menu regularMenu = restaurant.getRegularMenu();
       if (regularMenu != null) {
-        mapDishes(map, restaurant, regularMenu);
+        addDishes(restaurant, regularMenu, map);
       }
 
       final Menu gourmetMenu = restaurant.getGourmetMenu();
       if (gourmetMenu != null) {
-        mapDishes(map, restaurant, gourmetMenu);
+        addDishes(restaurant, gourmetMenu, map);
       }
     }
 
     System.out.println(map);
-
   }
 
-  private static void mapDishes(@NotNull final Map<DishRestaurantWrapper, CaloriesVeganWrapper> map,
-                                @NotNull final Restaurant restaurant,
-                                @NotNull final Menu menu) {
+  private static void addDishes(@NotNull final Restaurant restaurant,
+                                @NotNull final Menu menu,
+                                @NotNull final Map<DishRestaurantKey, CaloriesVegan> map) {
     final Dish[] dishes = menu.getDishes();
     if (dishes != null) {
       for (final Dish dish : dishes) {
         if (dish.getCalories() != null && dish.getVegan() != null) {
-          map.put(new DishRestaurantWrapper(dish.getName(), restaurant.getName()), new CaloriesVeganWrapper(dish.getCalories(), dish.getVegan()));
+          map.put(new DishRestaurantKey(restaurant.getName(), dish.getName()), new CaloriesVegan(dish.getCalories(), dish.getVegan()));
         }
       }
     }
@@ -63,12 +62,31 @@ public class Main {
     }
   }
 
-  private static class DishRestaurantWrapper {
+  private static class CaloriesVegan {
+
+    private final int calories;
+    private final boolean vegan;
+
+    public CaloriesVegan(final int calories, final boolean vegan) {
+      this.calories = calories;
+      this.vegan = vegan;
+    }
+
+    public int getCalories() {
+      return calories;
+    }
+
+    public boolean isVegan() {
+      return vegan;
+    }
+  }
+
+  private static class DishRestaurantKey {
 
     private final String restaurant;
     private final String dish;
 
-    private DishRestaurantWrapper(final String restaurant, final String dish) {
+    private DishRestaurantKey(final String restaurant, final String dish) {
       this.restaurant = restaurant;
       this.dish = dish;
     }
@@ -90,7 +108,7 @@ public class Main {
         return false;
       }
 
-      final DishRestaurantWrapper that = (DishRestaurantWrapper) o;
+      final DishRestaurantKey that = (DishRestaurantKey) o;
 
       return (restaurant != null ? restaurant.equals(that.restaurant) : that.restaurant == null) && (dish != null ? dish.equals(that.dish) : that.dish == null);
     }
@@ -103,23 +121,5 @@ public class Main {
     }
   }
 
-  private static class CaloriesVeganWrapper {
-
-    private final int calories;
-    private final boolean vegan;
-
-    private CaloriesVeganWrapper(final int calories, final boolean vegan) {
-      this.calories = calories;
-      this.vegan = vegan;
-    }
-
-    public int getCalories() {
-      return calories;
-    }
-
-    public boolean isVegan() {
-      return vegan;
-    }
-  }
 
 }
