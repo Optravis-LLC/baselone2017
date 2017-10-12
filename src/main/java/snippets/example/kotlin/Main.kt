@@ -15,7 +15,7 @@ fun main(args: Array<String>) {
 
   // map dish and restaurant to calories and vegan
   val map: Map<DishRestaurantKey, CaloriesVegan> = read(Paths.get("restaurants.json"), Array<Restaurant>::class.java).asSequence()
-      .filter { it.name != null }
+      .filter { restaurant -> restaurant.name != null }
       .flatMap { restaurant -> sequenceOf(restaurant.regularMenu, restaurant.gourmetMenu).map { menu -> restaurant to menu } }
       .flatMap { (restaurant, menu) -> (menu?.dishes?.asSequence() ?: emptySequence<Dish>()).map { dish -> restaurant to dish } }
       .filter { (restaurant, dish) -> dish.name != null && dish.calories != null && dish.vegan != null }
