@@ -1,23 +1,31 @@
 package snippets.expressions.java;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 import snippets.expressions.java.json.Dish;
 import snippets.expressions.java.json.Menu;
 import snippets.expressions.java.json.Restaurant;
-import util.JsonUtil;
 
 public class Main {
 
 
-  public static void main(String args[]) {
+  public static void main(String args[]) throws IOException {
 
     // map dish and restaurant to calories and vegan
     final Map<DishRestaurantWrapper, CaloriesVeganWrapper> map = new HashMap<>();
 
     // read restaurants in
-    for (final Restaurant restaurant : JsonUtil.read("restaurants.json", Restaurant[].class)) {
+    for (final Restaurant restaurant : read(Paths.get("restaurants.json"), Restaurant[].class)) {
       final Menu regularMenu = restaurant.getRegularMenu();
       if (regularMenu != null) {
         mapDishes(map, restaurant, regularMenu);
@@ -101,6 +109,13 @@ public class Main {
 
     public boolean isVegan() {
       return vegan;
+    }
+  }
+
+  public static <T> T read(Path path, Class<T> type) throws IOException {
+    try (Reader reader = Files.newBufferedReader(path, Charset.forName("UTF-8"))) {
+      Gson gson = new GsonBuilder().create();
+      return gson.fromJson(reader, type);
     }
   }
 
