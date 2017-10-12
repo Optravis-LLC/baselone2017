@@ -1,6 +1,5 @@
 package snippets.expressions.java;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,27 +13,34 @@ public class Main {
 
   public static void main(String args[]) {
 
-    // read restaurants in
-    final Restaurant[] restaurants = JsonUtil.read("restaurants.json", Restaurant[].class);
-
-    final Map<DishRestaurantWrapper, CaloriesVeganWrapper> map = new HashMap<>();
-    Arrays.stream(restaurants)
-        .forEach(restaurant -> {
-          final Menu regularMenu = restaurant.getRegularMenu();
-          if (regularMenu != null) {
-            final Dish[] dishes = regularMenu.getDishes();
-            if (dishes != null) {
-              for (final Dish dish : dishes) {
-
-              }
-            }
-          }
-
-
-        });
-
     // map dish and restaurant to calories and vegan
+    final Map<DishRestaurantWrapper, CaloriesVeganWrapper> map = new HashMap<>();
 
+    // read restaurants in
+    for (final Restaurant restaurant : JsonUtil.read("restaurants.json", Restaurant[].class)) {
+      final Menu regularMenu = restaurant.getRegularMenu();
+      if (regularMenu != null) {
+        mapDishes(map, restaurant, regularMenu, false);
+      }
+
+      final Menu veganMenu = restaurant.getVeganMenu();
+      if (veganMenu != null) {
+        mapDishes(map, restaurant, regularMenu, true);
+      }
+    }
+
+  }
+
+  private static void mapDishes(final Map<DishRestaurantWrapper, CaloriesVeganWrapper> map,
+                                final Restaurant restaurant,
+                                final Menu regularMenu,
+                                final boolean isVegan) {
+    final Dish[] dishes = regularMenu.getDishes();
+    if (dishes != null) {
+      for (final Dish dish : dishes) {
+        map.put(new DishRestaurantWrapper(dish.getName(), restaurant.getName()), new CaloriesVeganWrapper(dish.getCalories(), isVegan));
+      }
+    }
   }
 
   private static class DishRestaurantWrapper {
