@@ -1,4 +1,4 @@
-package snippets.example;
+package snippets.example.java;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,9 +14,9 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import snippets.example.json.Dish;
-import snippets.example.json.Menu;
-import snippets.example.json.Restaurant;
+import snippets.example.java.json.Dish;
+import snippets.example.java.json.Menu;
+import snippets.example.java.json.Restaurant;
 
 public class Main {
 
