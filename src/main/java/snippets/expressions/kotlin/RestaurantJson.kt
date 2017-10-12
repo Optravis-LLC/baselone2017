@@ -1,7 +1,7 @@
 package snippets.expressions.kotlin
 
 class Restaurant {
-  var name: String? = null
+  lateinit var name: String
 
   var regularMenu: Menu? = null
   var gourmetMenu: Menu? = null
@@ -12,7 +12,9 @@ class Menu {
 }
 
 class Dish {
-  var name: String? = null
+  lateinit var name: String
+
+  // primitive types
   var calories: Int? = null
   var vegan: Boolean? = null
 }
