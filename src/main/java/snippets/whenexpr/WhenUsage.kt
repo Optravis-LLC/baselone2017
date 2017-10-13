@@ -12,12 +12,13 @@ fun dayOfWeek(d: Int): String {
   }
 }
 
+fun Int.isEven() = rem(2) == 0
+fun Int.isOdd() = !isEven()
 
 fun process(v: Any) {
 
-  synchronized(v) {
+  val x = 3
 
-  }
   when (v) {
     42 -> println("answer found")
     "friday" -> println("weekend is coming")
@@ -25,4 +26,11 @@ fun process(v: Any) {
     is String -> println("v length is ${v.length}")
     else -> println("unable to process $v")
   }
+
+  when {
+    x.isOdd() -> print("x is odd")
+    x.isEven() -> print("x is even")
+    else -> print("x is funny")
+  }
+
 }

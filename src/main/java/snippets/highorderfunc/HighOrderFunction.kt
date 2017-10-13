@@ -24,7 +24,13 @@ class RectangleBuilder(
   fun build() = Rectangle(x, y, width, height)
 }
 
-fun rectangle(block: RectangleBuilder.() -> Unit) = RectangleBuilder().apply(block).build()
+fun rectangle(block: RectangleBuilder.() -> Unit): Rectangle {
+//  return RectangleBuilder().apply(block).build()
+
+  val builder = RectangleBuilder()
+  block(builder)
+  return builder.build()
+}
 
 val point = rectangle {
   x = 2

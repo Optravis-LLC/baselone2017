@@ -1,20 +1,17 @@
 package snippets.example.kotlin
 
 class Restaurant {
-
-  var name: String? = null
+  lateinit var name: String
   var regularMenu: Menu? = null
   var gourmetMenu: Menu? = null
 }
 
 class Menu {
-
-  var dishes: Array<Dish>? = null
+  var dishes: Array<Dish> = emptyArray()
 }
 
 class Dish {
-
-  var name: String? = null
+  lateinit var name: String
   var calories: Int? = null
   var vegan: Boolean? = null
 }

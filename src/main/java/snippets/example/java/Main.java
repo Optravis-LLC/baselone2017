@@ -14,9 +14,9 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import snippets.example.java.json.Dish;
-import snippets.example.java.json.Menu;
-import snippets.example.java.json.Restaurant;
+import snippets.example.java.dto.Dish;
+import snippets.example.java.dto.Menu;
+import snippets.example.java.dto.Restaurant;
 
 public class Main {
 
@@ -26,8 +26,9 @@ public class Main {
     // map dish and restaurant to calories and vegan
     final Map<DishRestaurantKey, CaloriesVegan> map = new HashMap<>();
 
-    // read restaurants in
+    // read restaurants in and transform
     for (final Restaurant restaurant : read(Paths.get("restaurants.json"), Restaurant[].class)) {
+
       final Menu regularMenu = restaurant.getRegularMenu();
       if (regularMenu != null) {
         addDishes(restaurant, regularMenu, map);

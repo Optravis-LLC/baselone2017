@@ -1,4 +1,4 @@
-package snippets.example.java.json;
+package snippets.example.java.dto;
 
 public class Dish {
 
