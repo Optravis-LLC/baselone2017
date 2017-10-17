@@ -1,4 +1,3 @@
-package snippets.example.kotlin
 
 class Restaurant {
   lateinit var name: String
