@@ -1,46 +1,46 @@
-package snippets.example.java;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import snippets.example.java.dto.Dish;
-import snippets.example.java.dto.Menu;
-import snippets.example.java.dto.Restaurant;
-
-public class Main {
+import dto.Dish;
+import dto.Menu;
+import dto.Restaurant;
 
 
-  public static void main(String args[]) throws IOException {
+
+@SuppressWarnings("Duplicates")
+public class Transform {
+
+
+  public static Map<DishRestaurantKey, CaloriesVegan> run() throws IOException {
 
     // map dish and restaurant to calories and vegan
-    final Map<DishRestaurantKey, CaloriesVegan> map = new HashMap<>();
+    final Map<DishRestaurantKey, CaloriesVegan> result = new HashMap<>();
 
     // read restaurants in and transform
-    for (final Restaurant restaurant : read(Paths.get("restaurants.json"), Restaurant[].class)) {
+    for (final Restaurant restaurant : readJson(Transform.class.getResourceAsStream("restaurants.json"), Restaurant[].class)) {
 
       final Menu regularMenu = restaurant.getRegularMenu();
       if (regularMenu != null) {
-        addDishes(restaurant, regularMenu, map);
+        addDishes(restaurant, regularMenu, result);
       }
 
       final Menu gourmetMenu = restaurant.getGourmetMenu();
       if (gourmetMenu != null) {
-        addDishes(restaurant, gourmetMenu, map);
+        addDishes(restaurant, gourmetMenu, result);
       }
     }
 
-    System.out.println(map);
+    return result;
   }
 
   private static void addDishes(@NotNull final Restaurant restaurant,
@@ -56,17 +56,26 @@ public class Main {
     }
   }
 
-  private static <T> T read(Path path, Class<T> type) throws IOException {
-    try (Reader reader = Files.newBufferedReader(path, Charset.forName("UTF-8"))) {
+  private static <T> T readJson(InputStream input, Class<T> type) throws IOException {
+    try (Reader reader = new InputStreamReader(input, Charset.forName("UTF-8")) {
+    }) {
       Gson gson = new GsonBuilder().create();
       return gson.fromJson(reader, type);
     }
   }
 
-  private static class CaloriesVegan {
+  static class CaloriesVegan {
 
     private final int calories;
     private final boolean vegan;
+
+    @Override
+    public String toString() {
+      return "CaloriesVegan{" +
+             "calories=" + calories +
+             ", vegan=" + vegan +
+             '}';
+    }
 
     public CaloriesVegan(final int calories, final boolean vegan) {
       this.calories = calories;
@@ -82,12 +91,12 @@ public class Main {
     }
   }
 
-  private static class DishRestaurantKey {
+  static class DishRestaurantKey {
 
     private final String restaurant;
     private final String dish;
 
-    private DishRestaurantKey(final String restaurant, final String dish) {
+    public DishRestaurantKey(final String restaurant, final String dish) {
       this.restaurant = restaurant;
       this.dish = dish;
     }
@@ -98,6 +107,14 @@ public class Main {
 
     public String getDish() {
       return dish;
+    }
+
+    @Override
+    public String toString() {
+      return "DishRestaurantKey{" +
+             "restaurant='" + restaurant + '\'' +
+             ", dish='" + dish + '\'' +
+             '}';
     }
 
     @Override

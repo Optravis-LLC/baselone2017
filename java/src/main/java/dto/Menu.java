@@ -1,4 +1,4 @@
-package snippets.example.java.dto;
+package dto;
 
 public class Menu {
 

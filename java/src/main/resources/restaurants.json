@@ -18,5 +18,29 @@
         }
       ]
     }
+  },
+  {
+    "name": "Cheval Blanc",
+    "regularMenu": {
+      "dishes": [
+        {
+          "name": "Risotto",
+          "calories": 450,
+          "vegan": true
+        }
+      ]
+    }
+    ,
+    "gourmetMenu": {
+      "dishes": [
+        {
+          "name": "Menu des Rois",
+          "calories": 800,
+          "vegan": false
+        }
+      ]
+    }
+
   }
+
 ]
