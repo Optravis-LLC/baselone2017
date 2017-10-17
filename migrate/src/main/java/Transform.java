@@ -21,12 +21,10 @@ import dto.Restaurant;
 public class Transform {
 
 
-  public static Map<DishRestaurantKey, CaloriesVegan> run() throws IOException {
+  public static Map<RestaurantDishKey, CaloriesVegan> run() throws IOException {
 
     // map dish and restaurant to calories and vegan
-    final Map<DishRestaurantKey, CaloriesVegan> result = new HashMap<>();
-
-    System.out.println(Paths.get("../restaurants.json").toFile().getCanonicalFile().getAbsolutePath());
+    final Map<RestaurantDishKey, CaloriesVegan> result = new HashMap<>();
 
     // read restaurants in and transform
     for (final Restaurant restaurant : readJson(Paths.get("../restaurants.json"), Restaurant[].class)) {
@@ -47,12 +45,12 @@ public class Transform {
 
   private static void addDishes(@NotNull final Restaurant restaurant,
                                 @NotNull final Menu menu,
-                                @NotNull final Map<DishRestaurantKey, CaloriesVegan> map) {
+                                @NotNull final Map<RestaurantDishKey, CaloriesVegan> map) {
     final Dish[] dishes = menu.getDishes();
     if (dishes != null) {
       for (final Dish dish : dishes) {
         if (dish.getCalories() != null && dish.getVegan() != null) {
-          map.put(new DishRestaurantKey(restaurant.getName(), dish.getName()), new CaloriesVegan(dish.getCalories(), dish.getVegan()));
+          map.put(new RestaurantDishKey(restaurant.getName(), dish.getName()), new CaloriesVegan(dish.getCalories(), dish.getVegan()));
         }
       }
     }
@@ -94,12 +92,12 @@ class CaloriesVegan {
   }
 }
 
-class DishRestaurantKey {
+class RestaurantDishKey {
 
   private final String restaurant;
   private final String dish;
 
-  public DishRestaurantKey(final String restaurant, final String dish) {
+  public RestaurantDishKey(final String restaurant, final String dish) {
     this.restaurant = restaurant;
     this.dish = dish;
   }
@@ -129,7 +127,7 @@ class DishRestaurantKey {
       return false;
     }
 
-    final DishRestaurantKey that = (DishRestaurantKey) o;
+    final RestaurantDishKey that = (RestaurantDishKey) o;
 
     return (restaurant != null ? restaurant.equals(that.restaurant) : that.restaurant == null) && (dish != null ? dish.equals(that.dish) : that.dish == null);
   }
