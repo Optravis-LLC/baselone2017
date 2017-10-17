@@ -13,7 +13,7 @@ class TransformTest {
 
     val map = transform(Paths.get("../restaurants.json"))
 
-    map[DishRestaurantKey("Cheval Blanc", "Risotto")]?.apply {
+    map[RestaurantDishKey("Cheval Blanc", "Risotto")]?.apply {
       assertEquals(450, calories)
       assertTrue(isVegan)
     }
