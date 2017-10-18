@@ -1,6 +1,6 @@
 package snippets.generics.kotlin
 
-// Produces Ts -> declaration-site variance annotation 'out'.
+// Produces Ts -> variance annotation 'out'.
 interface Producer<out T> {
   fun get(): T
 }

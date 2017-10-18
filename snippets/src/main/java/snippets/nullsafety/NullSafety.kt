@@ -5,22 +5,26 @@ fun foo(string: String) {}
 
 
 fun main(args: Array<String>) {
-  val string: String? = null
 
-  // nullability check at compile time
-//  println(string.length) // compilation error
+  val firstName: String = "John" // non-null
+  val middleName: String? = null // nullable
+
+  // does not compile
+//  println(middleName.length)
 
   // smart cast
-  if (string != null) {
-    println(string.length) // compile without any error
+  if (middleName != null) {
+    println(middleName.length)
   }
 
   // safe method call
-  val length: Int? = string?.length
+  val length: Int? = middleName?.length
 
-  // elvis operator
-  val orDefault: String = string ?: "default"
-  val orFail: String = string ?: throw Exception("no value")
-  val orReturn: String = string ?: return
+  // safe method call with elvis operator
+//  val length: Int = middleName?.length ?: 0
+
 }
 
+fun getGourmetDishCount(restaurant: Restaurant) : Int {
+  return restaurant.gourmetMenu?.dishes?.size ?: 0
+}
